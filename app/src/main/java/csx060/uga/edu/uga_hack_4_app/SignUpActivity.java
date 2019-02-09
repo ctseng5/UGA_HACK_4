@@ -119,9 +119,6 @@ public class SignUpActivity extends AppCompatActivity {
             final String password = passwordInput.getText().toString().trim();
             final String fname = firstName.getText().toString().trim();
             final String lname = lastName.getText().toString().trim();
-            //Random number is used to assign a random profile picture.
-            final int randNum = new Random().nextInt(10);
-
 
             //If any fields are empty, display error toast message
             if (TextUtils.isEmpty(email)) {
@@ -156,8 +153,7 @@ public class SignUpActivity extends AppCompatActivity {
                     .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                         /**
                          * If account creation is completed, add field to Firebase Authentication
-                         * Also add a new database entry for user's first name, last name, email, phone, userID,
-                         * and a random number for profile picture.
+                         * Also add a new database entry for user's first name, last name, email, userID,
                          * @param task
                          */
                         @Override
