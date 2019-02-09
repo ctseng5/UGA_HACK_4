@@ -1,7 +1,7 @@
 package csx060.uga.edu.uga_hack_4_app;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -11,3 +11,4 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 }
+
