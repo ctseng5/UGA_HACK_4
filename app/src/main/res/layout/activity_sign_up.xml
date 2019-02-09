@@ -8,20 +8,20 @@
     tools:context=".SignUpActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/logo2"
         android:layout_width="323dp"
-        android:layout_height="179dp"
+        android:layout_height="157dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="536dp"
+        android:layout_marginBottom="448dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.174"
         app:srcCompat="@drawable/metrobreezytrans2" />
 
     <EditText
@@ -98,7 +98,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/logo2" />
 
     <Button
         android:id="@+id/signUpButton"
