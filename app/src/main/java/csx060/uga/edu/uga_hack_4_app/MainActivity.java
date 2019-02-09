@@ -72,10 +72,6 @@ public class MainActivity extends AppCompatActivity {
         btn = (Button) findViewById(R.id.btn);
         etqr = (EditText) findViewById(R.id.etqr);
 
-
-        btn = (Button) findViewById(R.id.btn);
-        etqr = (EditText) findViewById(R.id.etqr);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
