@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     mTextMessage.setText(R.string.title_home);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_payment:
                     mTextMessage.setText(R.string.title_dashboard);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_logout:
                     mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
@@ -68,14 +68,16 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         iv = (ImageView) findViewById(R.id.iv);
+
         btn = (Button) findViewById(R.id.btn);
+        etqr = (EditText) findViewById(R.id.etqr);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etqr.getText().toString().trim().length() == 0){
-                    Toast.makeText(MainActivity.this, "Enter String!", Toast.LENGTH_SHORT).show();
-                }else {
+                /*if(etqr.getText().toString().trim().length() == 0){
+                    //Toast.makeText(MainActivity.this, "Enter String!", Toast.LENGTH_SHORT).show();
+                }else {*/
                     try {
                         bitmap = TextToImageEncode(etqr.getText().toString());
                         iv.setImageBitmap(bitmap);
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                }
+               // }
             }
         });
     }
