@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         iv = (ImageView) findViewById(R.id.iv);
         btn = (Button) findViewById(R.id.btn);
-
+        etqr = (EditText) findViewById(R.id.etqr);
+        
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
