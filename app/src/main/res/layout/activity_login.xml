@@ -80,7 +80,7 @@
         android:layout_width="295dp"
         android:layout_height="253dp"
         app:srcCompat="@drawable/metrobreezytrans2"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="91dp" />
+        tools:layout_editor_absoluteX="77dp"
+        tools:layout_editor_absoluteY="61dp" />
 
 </android.support.constraint.ConstraintLayout>
