@@ -41,6 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     /**
      * Creates the views for the signup activity.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -75,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
     private class LoginOnClickListener implements View.OnClickListener {
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), LoginActivity.class);
-            view.getContext().startActivity( intent );
+            view.getContext().startActivity(intent);
         }
     }
 
@@ -97,11 +98,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if(passwordInput.getText().toString().equals(passwordConfirmation.getText().toString())) {
+            if (passwordInput.getText().toString().equals(passwordConfirmation.getText().toString())) {
                 passwordMessage.setText("");
                 signUpButton.setEnabled(true);
-            }
-            else {
+            } else {
                 passwordMessage.setText("Passwords do not match");
                 signUpButton.setEnabled(false);
             }
@@ -154,6 +154,7 @@ public class SignUpActivity extends AppCompatActivity {
                         /**
                          * If account creation is completed, add field to Firebase Authentication
                          * Also add a new database entry for user's first name, last name, email, userID,
+                         *
                          * @param task
                          */
                         @Override
@@ -165,8 +166,7 @@ public class SignUpActivity extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
                                         Toast.LENGTH_SHORT).show();
-                            }
-                            else {
+                            } else {
                                 DatabaseReference usersRef = ref.child("users");
                                 usersRef.child(auth.getUid()).setValue(new User(fname, lname, email, auth.getUid()));
                                 startActivity(new Intent(SignUpActivity.this, MainActivity.class));
