@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
 
         iv = (ImageView) findViewById(R.id.iv);
 
-        btn = (Button) findViewById(R.id.navigation_payment);
-        //etqr = (EditText) findViewById(R.id.etqr);
+        btn = (Button) findViewById(R.id.btn);
+        etqr = (EditText) findViewById(R.id.etqr);
 
 
-       /* btn = (Button) findViewById(R.id.btn);
-        etqr = (EditText) findViewById(R.id.etqr);*/
+        btn = (Button) findViewById(R.id.btn);
+        etqr = (EditText) findViewById(R.id.etqr);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(MainActivity.this, "Enter String!", Toast.LENGTH_SHORT).show();
                 }else {*/
                     try {
-                        bitmap = TextToImageEncode()//etqr.getText().toString()*;
+                        bitmap = TextToImageEncode(etqr.getText().toString());
                         iv.setImageBitmap(bitmap);
                         String path = saveImage(bitmap);  //give read write permission
                         Toast.makeText(MainActivity.this, "QRCode saved to -> "+path, Toast.LENGTH_SHORT).show();
