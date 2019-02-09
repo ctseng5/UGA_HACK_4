@@ -37,16 +37,16 @@ public class LoginActivity extends AppCompatActivity {
         emailField.addTextChangedListener(new LoginListener());
         passwordField = (EditText) findViewById(R.id.passwordText);
         passwordField.addTextChangedListener(new LoginListener());
+        signUpButton = (Button) findViewById(R.id.signUpButton);
+        signUpButton.setOnClickListener(new SignUpButtonListener());
         logInButton = (Button) findViewById(R.id.logInButton);
         logInButton.setEnabled(false);
-        logInButton.setOnClickListener(new View.OnClickListener(){
+        logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startSignIn();
             }
         });
-        signUpButton = (Button) findViewById(R.id.signUpButton);
-        signUpButton.setOnClickListener(new SignUpButtonListener());
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -99,7 +99,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void startSignIn(){
+    /**
+     * Gets the credentials from the text fields and attempts to log the user in.
+     */
+    private void startSignIn() {
         String email = emailField.getText().toString();
         String password = passwordField.getText().toString();
 
@@ -112,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     /**

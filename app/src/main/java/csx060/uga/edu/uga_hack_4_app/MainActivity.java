@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         iv = (ImageView) findViewById(R.id.iv);
-        etqr = (EditText) findViewById(R.id.etqr);
         btn = (Button) findViewById(R.id.btn);
 
         btn.setOnClickListener(new View.OnClickListener() {
