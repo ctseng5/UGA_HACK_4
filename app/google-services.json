@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "757376376295",
+    "firebase_url": "https://uga-hacks-4.firebaseio.com",
+    "project_id": "uga-hacks-4",
+    "storage_bucket": "uga-hacks-4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757376376295:android:abeb0566cbdf06bb",
+        "android_client_info": {
+          "package_name": "csx060.uga.edu.uga_hack_4_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757376376295-lmp7uosp3agfdp9nnb18u3kj60997ufc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "csx060.uga.edu.uga_hack_4_app",
+            "certificate_hash": "4665d24472c6a603b35a3ac2d84db78b705fb798"
+          }
+        },
+        {
+          "client_id": "757376376295-fppsmht0ihik3vtgmi59rcsid016e54p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlhE5jcNWv7tke8c-WiTEk6c7i-4gcLTQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757376376295-fppsmht0ihik3vtgmi59rcsid016e54p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
