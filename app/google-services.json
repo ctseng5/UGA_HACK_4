@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "580301813784-icq889v1a342hb788jqeq91pc9s0fm3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "csx060.uga.edu.uga_hack_4_app",
+            "certificate_hash": "97402ed819742c2d6d907afc16bba687f3325053"
+          }
+        },
+        {
           "client_id": "580301813784-r7i61d5tqlr280lt2aqo354sfrbk6coo.apps.googleusercontent.com",
           "client_type": 3
         }

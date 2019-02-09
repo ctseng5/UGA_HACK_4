@@ -15,7 +15,7 @@
         android:orientation="vertical"
         tools:context="com.exampledemo.parsaniahardik.generate_qr_code.MainActivity">
 
-        <EditText
+       <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/etqr"
