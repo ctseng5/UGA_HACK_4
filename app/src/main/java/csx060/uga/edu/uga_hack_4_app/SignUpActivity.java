@@ -21,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Random;
 
-
 public class SignUpActivity extends AppCompatActivity {
 
     //Initialize global variables
@@ -49,8 +48,6 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-<<<<<<< HEAD
-=======
         //Get Firebase Auth instance
         auth = FirebaseAuth.getInstance();
 
@@ -178,7 +175,6 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     });
         }
->>>>>>> 61d38b3f17edf19f3f8c155d05137e6f5031ddf8
     }
 
 
