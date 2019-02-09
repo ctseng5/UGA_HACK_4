@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public final static int QRcodeWidth = 500 ;
     private static final String IMAGE_DIRECTORY = "/QRcodeDemonuts";
     Bitmap bitmap ;
-    private EditText etqr;
+    //private EditText etqr;
     private ImageView iv;
     private Button btn;
     private TextView mTextMessage;
