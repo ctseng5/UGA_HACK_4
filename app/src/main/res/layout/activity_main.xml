@@ -15,20 +15,20 @@
         android:orientation="vertical"
         tools:context="com.exampledemo.parsaniahardik.generate_qr_code.MainActivity">
 
-       <!-- <EditText
+       <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/etqr"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
-            android:hint="Enter String" />-->
+            android:hint="Enter String" />
 
-        <!--<Button
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn"
             android:text="Create Image"
-            android:layout_marginTop="10dp"/>-->
+            android:layout_marginTop="10dp"/>
 
         <ImageView
             android:layout_width="wrap_content"
