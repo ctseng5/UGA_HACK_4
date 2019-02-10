@@ -48,11 +48,16 @@ public class HomeFragment extends Fragment {
 
        ImageView imvQrCode = (ImageView) view.findViewById(R.id.imageView2);
 
-       Bitmap bitmap = textToImage("Michael", 500, 500);
+        Bitmap bitmap = null;
+        try {
+            bitmap = textToImage("Michael", 500, 500);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
 
         imvQrCode.setImageBitmap(bitmap);
         // Inflate the layout for this fragment
-        /return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     private Bitmap textToImage(String text, int width, int height) throws WriterException, NullPointerException{
