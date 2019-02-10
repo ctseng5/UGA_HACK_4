@@ -53,6 +53,7 @@
             android:layout_marginBottom="8dp"
             android:background="@color/colorPrimaryDark"
             android:text="Single Trip"
+            android:onClick="singleAdd"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/fiveTrips"
             app:layout_constraintHorizontal_bias="0.615"
