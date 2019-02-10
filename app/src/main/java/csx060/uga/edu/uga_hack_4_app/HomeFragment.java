@@ -20,6 +20,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -41,18 +47,58 @@ import android.view.ViewGroup;
 
 
 public class HomeFragment extends Fragment {
+    //Reference to Firebase Database
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    //Reference to Information table
+    DatabaseReference ref = database.getReference("Information");
+    private FirebaseAuth auth;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        ImageView imvQrCode = (ImageView) view.findViewById(R.id.imageView2);
+        final ImageView imvQrCode = (ImageView) view.findViewById(R.id.imageView2);
         TextView numRide = (TextView) view.findViewById(R.id.textView);
 
-       Bitmap bitmap = textToImage("Michael", 500, 500);
+        auth = FirebaseAuth.getInstance();
+        DatabaseReference RelationRef = ref.child("users");
 
-        imvQrCode.setImageBitmap(bitmap);
+        //Fetch the users from the DB
+        RelationRef.child(auth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    String email = "";
+
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String key = snapshot.getKey().toString();
+
+                        //If the user is a friend, show "remove" instead of "add" button
+                        if (key.equalsIgnoreCase("email")) {
+                            email = (String) snapshot.getValue();
+                            System.out.println(email);
+                            break;
+                        }
+                    }
+
+                    Bitmap bitmap = null;
+                    try {
+                        bitmap = textToImage(email, 500, 500);
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
+
+                    imvQrCode.setImageBitmap(bitmap);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         // Inflate the layout for this fragment
-        /return inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 
     private Bitmap textToImage(String text, int width, int height) throws WriterException, NullPointerException{
