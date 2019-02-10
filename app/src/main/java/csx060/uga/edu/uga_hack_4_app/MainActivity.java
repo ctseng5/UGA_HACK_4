@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -67,7 +69,11 @@ public class MainActivity extends AppCompatActivity {
                     loginScreen.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     MainActivity.this.finish();
                     startActivity(loginScreen);
+
                     break;
+            }
+            if(selectFragment == null || item.getItemId() == R.id.navigation_logout){
+                return true;
             }
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectFragment).commit();
