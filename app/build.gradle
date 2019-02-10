@@ -37,6 +37,7 @@ dependencies {
     implementation('org.glassfish.jersey.containers:jersey-container-servlet:2.14'){
         exclude group: "javax.inject", module: "javax.inject"
     }
+    implementation 'javax.xml.stream:stax-api:1.0-2'
 }
 
 apply plugin: 'com.google.gms.google-services'
