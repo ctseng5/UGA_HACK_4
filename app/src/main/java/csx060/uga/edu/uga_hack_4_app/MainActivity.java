@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                     selectFragment = new PaymentFragment();
                     break;
                 case R.id.navigation_logout:
-                    // LogOut
                     auth.signOut();
 
                     Toast.makeText(MainActivity.this, "Log Out", Toast.LENGTH_SHORT).show();
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
 
-//            getSupportFragmentManager().beginTransaction().replace(R.id.);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectFragment).commit();
             return true;
         }
     };
