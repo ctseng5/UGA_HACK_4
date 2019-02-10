@@ -200,7 +200,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 DatabaseReference usersRef = ref.child("users");
-                                usersRef.child(auth.getUid()).setValue(new User(fname, lname, email, auth.getUid()));
+                                usersRef.child(auth.getUid()).setValue(new User(fname, lname, email, 0, auth.getUid()));
                                 startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                                 finish();
                             }

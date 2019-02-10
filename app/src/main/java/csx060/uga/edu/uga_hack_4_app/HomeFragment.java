@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         final ImageView imvQrCode = (ImageView) view.findViewById(R.id.imageView2);
-        TextView numRide = (TextView) view.findViewById(R.id.textView);
+        final EditText tripCount = (EditText) view.findViewById(R.id.editText2);
 
         auth = FirebaseAuth.getInstance();
         DatabaseReference RelationRef = ref.child("users");
@@ -69,6 +69,7 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
                     String email = "";
+                    long count = 0;
 
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         String key = snapshot.getKey().toString();
@@ -76,8 +77,10 @@ public class HomeFragment extends Fragment {
                         //If the user is a friend, show "remove" instead of "add" button
                         if (key.equalsIgnoreCase("email")) {
                             email = (String) snapshot.getValue();
-                            System.out.println(email);
-                            break;
+                        }
+
+                        else if (key.equalsIgnoreCase("tripCount")) {
+                            count = (long) snapshot.getValue();
                         }
                     }
 
@@ -88,6 +91,9 @@ public class HomeFragment extends Fragment {
                         e.printStackTrace();
                     }
 
+                    String num = Long.toString(count);
+
+                    tripCount.setText("Number of Trips: " + num);
                     imvQrCode.setImageBitmap(bitmap);
                 }
             }

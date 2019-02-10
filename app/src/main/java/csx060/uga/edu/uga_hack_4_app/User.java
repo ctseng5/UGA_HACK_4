@@ -4,6 +4,7 @@ public class User {
     public String firstName;
     public String lastName;
     public String email;
+    public int tripCount;
     public String uid;
 
     /**
@@ -11,15 +12,29 @@ public class User {
      * @param firstName
      * @param lastName
      * @param email
+     * @param tripCount
      * @param uid
      */
-    public User(String firstName, String lastName, String email, String uid) {
+    public User(String firstName, String lastName, String email, int tripCount, String uid) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.tripCount = tripCount;
         this.uid = uid;
     }
 
+    /**
+     * Constructor for User
+     * @param tripCount
+     * @param uid
+     */
+    public User(int tripCount, String uid) {
+        this.firstName = getFirstName();
+        this.lastName = getLastName();
+        this.email = getEmail();
+        this.tripCount = tripCount;
+        this.uid = uid;
+    }
     /**
      * Default constructor for user
      */
@@ -27,6 +42,7 @@ public class User {
         firstName = "";
         lastName = "";
         email = "";
+        tripCount = 0;
         uid = "";
     }
 
@@ -79,13 +95,27 @@ public class User {
     }
 
     /**
+     * Sets the tripCount
+     * @param tripCount
+     */
+    public void setTripCount(int tripCount) {
+        this.tripCount = tripCount;
+    }
+    /**
+     * Gets the tripCount
+     * @return
+     */
+    public int getTripCount() {
+        return tripCount;
+    }
+
+    /**
      * Sets the email
      * @param email
      */
     public void setEmail(String email) {
         this.email = email;
     }
-
     /**
      * Gets the UID
      * @return
