@@ -44,9 +44,9 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-       View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-       ImageView imvQrCode = (ImageView) view.findViewById(R.id.imageView2);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ImageView imvQrCode = (ImageView) view.findViewById(R.id.imageView2);
+        TextView numRide = (TextView) view.findViewById(R.id.textView);
 
         Bitmap bitmap = null;
         try {
@@ -74,9 +74,6 @@ public class HomeFragment extends Fragment {
         int bitMatrixHeight = bitMatrix.getHeight();
         int[] pixels = new int[bitMatrixWidth*bitMatrixHeight];
 
-//       int colorWhite = 0xFFFFFFFF;
-//       int colorBlack = 0xFF000000;
-
         for (int y=0; y<bitMatrixHeight; y++) {
             int offset = y * bitMatrixWidth;
 
@@ -84,7 +81,7 @@ public class HomeFragment extends Fragment {
                 pixels[offset + x] = bitMatrix.get(x,y) ? R.color.black : R.color.white;
             }
         }
-        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
+        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_8888);
 
         bitmap.setPixels(pixels, 0, width, 0, 0, bitMatrixWidth, bitMatrixHeight);
         return bitmap;
