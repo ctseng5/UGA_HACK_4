@@ -1,9 +1,9 @@
 package csx060.uga.edu.uga_hack_4_app;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -19,7 +19,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Random;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+
+//api stuff
+//import com.google.android.gms.common.api.Response;
+//import android.content.Entity;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -34,6 +44,9 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView phoneNum;
     private TextView passwordMessage;
     private FirebaseAuth auth;
+    private static final String API_KEY = "prod-a59aa9a65739dcebd25d1d1c1621c703b22ac8c5e9bd99100cab75be443ccb1e7d6066256655505e476ab01a2385692abdd7845d40b4622bdfdccac3a52e70bf";
+    private static final String API_URL = "https://certwebservices.ft.cashedge.com/sdk/Payments/Customers/";
+    private static final String BSN_ID= "BUSN-88fc17bfa29dcd3facb4f24ca29683c9e14575e3d9ec77d78053423beab73cfd";
     //Reference to Firebase Database
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     //Reference to Information table
@@ -84,7 +97,7 @@ public class SignUpActivity extends AppCompatActivity {
      * TextWatcher to see see if the password and password confirmation fields match.
      * If they don't display a warning message
      */
-    private class PasswordListener implements TextWatcher {
+    private class PasswordListener implements TextWatcher{
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -119,6 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
             final String password = passwordInput.getText().toString().trim();
             final String fname = firstName.getText().toString().trim();
             final String lname = lastName.getText().toString().trim();
+
 
             //If any fields are empty, display error toast message
             if (TextUtils.isEmpty(email)) {
@@ -173,7 +187,52 @@ public class SignUpActivity extends AppCompatActivity {
                                 finish();
                             }
                         }
+
+
                     });
-        }
+
+            /**
+             * * Create user API call to Fiserv API
+             */
+            Client client = ClientBuilder.newClient();
+            MultivaluedMap<String,Object> header= new MultivaluedHashMap<String,Object>();
+            header.add("apiKey",API_KEY);
+            header.add("businessID",BSN_ID);
+
+            String body = "{\n" +
+                    "\"address\": {\n" +
+                    "  \"city\": \"Lithonia\",\n" +
+                    "  \"line1\": \"1234 Maple Road\",\n" +
+                    "  \"line2\": \"\",\n" +
+                    "  \"state\": \"GA\",\n" +
+                    "  \"zip\": \"43017\"\n" +
+                    "},\n" +
+                    "\"defaultSpeed\": \"Next Day\",\n" +
+                    "\"email\": "+ email + ",\n" +
+                    "\"fundingAccount\": {\n" +
+                    "   \"ddaAccount\": {\n" +
+                    "    \"accountNumber\": \"226771203\",\n" +
+                    "    \"accountType\": \"Checking\",\n" +
+                    "    \"rtn\": \"044000037\"\n" +
+                    "  },\n" +
+                    "  \"nickName\": \"Shalissa\"\n" +
+                    "},\n" +
+                    "\"mode\": \"initiate\",\n" +
+                    "\"personName\": {\n" +
+                    " \"firstName\":" + firstName +",\n" +
+                    "  \"lastName\":"+ lastName +"\n" +
+                    "},\n" +
+                    "\"phone1\": \"6145643001\",\n" +
+                    "\"phone2\": \"6145643002\",\n" +
+                    "\"requestID\": \"testcustomerAdd2\",\n" +
+                    " \"version\": \"1\"\n" +
+                    "}";
+
+            Response response = client.target(API_URL)
+                    .request(MediaType.APPLICATION_JSON)
+                    .headers(header)
+                    .post(Entity.entity(body, MediaType.APPLICATION_JSON));
+            System.out.println(response.readEntity(String.class));
+        }//onClick
     }
 }
