@@ -10,6 +10,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled = true;
     }
     buildTypes {
         release {
@@ -34,6 +35,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation('org.glassfish.jersey.containers:jersey-container-servlet:2.14'){
         exclude group: "javax.inject", module: "javax.inject"
     }
