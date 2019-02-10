@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,6 +19,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -45,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView passwordMessage;
     private FirebaseAuth auth;
     private static final String API_KEY = "prod-a59aa9a65739dcebd25d1d1c1621c703b22ac8c5e9bd99100cab75be443ccb1e7d6066256655505e476ab01a2385692abdd7845d40b4622bdfdccac3a52e70bf";
-    private static final String API_URL = "https://certwebservices.ft.cashedge.com/sdk/Payments/Customers/";
+    private static final String API_URL = "https://certwebservices.ft.cashedge.com/sdk/Payments/Customers";
     private static final String BSN_ID= "BUSN-88fc17bfa29dcd3facb4f24ca29683c9e14575e3d9ec77d78053423beab73cfd";
     //Reference to Firebase Database
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -61,6 +73,12 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        /**
+         * * Create user API call to Fiserv API
+         */
+//        callAPI();
+        sendPost();
 
         //Get Firebase Auth instance
         auth = FirebaseAuth.getInstance();
@@ -181,49 +199,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                /**
-                                 * * Create user API call to Fiserv API
-                                 */
-                                Client client = ClientBuilder.newClient();
-                                MultivaluedMap<String,Object> header= new MultivaluedHashMap<String,Object>();
-                                header.add("apiKey",API_KEY);
-                                header.add("businessID",BSN_ID);
-
-                                String body = "{\n" +
-                                        "\"address\": {\n" +
-                                        "  \"city\": \"Lithonia\",\n" +
-                                        "  \"line1\": \"1234 Maple Road\",\n" +
-                                        "  \"line2\": \"\",\n" +
-                                        "  \"state\": \"GA\",\n" +
-                                        "  \"zip\": \"43017\"\n" +
-                                        "},\n" +
-                                        "\"defaultSpeed\": \"Next Day\",\n" +
-                                        "\"email\": "+ email + ",\n" +
-                                        "\"fundingAccount\": {\n" +
-                                        "   \"ddaAccount\": {\n" +
-                                        "    \"accountNumber\": \"226771203\",\n" +
-                                        "    \"accountType\": \"Checking\",\n" +
-                                        "    \"rtn\": \"044000037\"\n" +
-                                        "  },\n" +
-                                        "  \"nickName\": \"Shalissa\"\n" +
-                                        "},\n" +
-                                        "\"mode\": \"initiate\",\n" +
-                                        "\"personName\": {\n" +
-                                        " \"firstName\":" + firstName +",\n" +
-                                        "  \"lastName\":"+ lastName +"\n" +
-                                        "},\n" +
-                                        "\"phone1\": \"6145643001\",\n" +
-                                        "\"phone2\": \"6145643002\",\n" +
-                                        "\"requestID\": \"testcustomerAdd2\",\n" +
-                                        " \"version\": \"1\"\n" +
-                                        "}";
-
-                                Response response = client.target(API_URL)
-                                        .request(MediaType.APPLICATION_JSON)
-                                        .headers(header)
-                                        .post(Entity.entity(body, MediaType.APPLICATION_JSON));
-                                System.out.println(response.readEntity(String.class));
-
                                 DatabaseReference usersRef = ref.child("users");
                                 usersRef.child(auth.getUid()).setValue(new User(fname, lname, email, auth.getUid()));
                                 startActivity(new Intent(SignUpActivity.this, MainActivity.class));
@@ -233,4 +208,102 @@ public class SignUpActivity extends AppCompatActivity {
                     });
         }//onClick
     }
+
+    public void sendPost() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("-----------------------------starting--------------");
+                    URL url = new URL(API_URL);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept","application/json");
+
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    System.out.println("--------------------------almost------------------");
+                    JSONObject jsonObject = buidJsonObject();
+//                    jsonParam.put("timestamp", 1488873360);
+//                    jsonParam.put("uname", "");
+//                    jsonParam.put("message", "");
+//                    jsonParam.put("latitude", 0D);
+//                    jsonParam.put("longitude", 0D);
+
+                    Log.i("JSON", jsonObject.toString());
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(jsonObject.toString());
+                    Log.i(SignUpActivity.class.toString(), jsonObject.toString());
+
+                    os.flush();
+                    os.close();
+
+                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                    Log.i("MSG" , conn.getResponseMessage());
+
+                    conn.disconnect();
+                    System.out.println("---------------------------made ittt----------------------");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
+    }
+
+    private JSONObject buidJsonObject() throws JSONException {
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.accumulate("name", "");
+        jsonObject.accumulate("country","");
+        jsonObject.accumulate("twitter", "");
+
+        return jsonObject;
+    }
+//    public static void callAPI(){
+//        Client client = ClientBuilder.newClient();
+//        MultivaluedMap<String,Object> header= new MultivaluedHashMap<String,Object>();
+//        header.add("apiKey",API_KEY);
+//        header.add("businessID",BSN_ID);
+//
+//        String body = "{\n" +
+//                "\"address\": {\n" +
+//                "  \"city\": \"Lithonia\",\n" +
+//                "  \"line1\": \"1234 Maple Road\",\n" +
+//                "  \"line2\": \"\",\n" +
+//                "  \"state\": \"GA\",\n" +
+//                "  \"zip\": \"43017\"\n" +
+//                "},\n" +
+//                "\"defaultSpeed\": \"Next Day\",\n" +
+//                "\"email\": \"bathy.acosta@Fiserv.com\",\n" +
+//                "\"fundingAccount\": {\n" +
+//                "   \"ddaAccount\": {\n" +
+//                "    \"accountNumber\": \"226771203\",\n" +
+//                "    \"accountType\": \"Checking\",\n" +
+//                "    \"rtn\": \"044000037\"\n" +
+//                "  },\n" +
+//                "  \"nickName\": \"Shalissa\"\n" +
+//                "},\n" +
+//                "\"mode\": \"initiate\",\n" +
+//                "\"personName\": {\n" +
+//                " \"firstName\": \"Bathy\",\n" +
+//                "  \"lastName\": \"Acosta\"\n" +
+//                "},\n" +
+//                "\"phone1\": \"6145643001\",\n" +
+//                "\"phone2\": \"6145643002\",\n" +
+//                "\"requestID\": \"testcustomerAdd2\",\n" +
+//                " \"version\": \"1\"\n" +
+//                "}";
+//
+//        Entity ety = Entity.entity(body, MediaType.APPLICATION_JSON);
+//        Response response = client.target(API_URL)
+//                .request(MediaType.APPLICATION_JSON)
+//                .headers(header)
+//                .post(ety);
+//        System.out.println(response.readEntity(String.class));
+//    }
 }
